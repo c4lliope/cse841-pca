@@ -21,7 +21,7 @@ describe 'Thresholding' do
 
   private
   def test_threshold_value threshold
-    `ruby example.rb -f #{original} -T #{threshold} -o #{ruby_output} 2>&1`
+    `ruby threshold.rb -f #{original} -T #{threshold} -o #{ruby_output} 2>&1`
     `./#{c_executable} -f #{original} -T #{threshold} -o #{c_output} 2>&1`
     `diff #{c_output} #{ruby_output}`.must_equal ''
   end

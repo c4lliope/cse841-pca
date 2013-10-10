@@ -12,43 +12,27 @@ MAX_FILENAME_LENGTH = 128
 WHITE = 255
 BLACK = 0
 
-image = Array.new(MAXNROW, Array.new(MAXNCOL, 0))
-
-=begin
-/* print instructions to standard error if the syntax is wrong */
-/* argv: argument vector (input)  */
-void print_usage(argv)
-  char *argv[];
-{
-  fprintf (stderr,"Usage: %s switches \n", argv[0]);
-  fprintf (stderr,"where switches are:\n");
-  fprintf (stderr," -f = input RAWBITS pgm image file (default standard in)\n");
-  fprintf (stderr," -T = threshold, between 0 and 255, required\n");
-  fprintf (stderr," -o = output RAWBITS pgm image (default: standard out)\n");
-  fprintf (stderr,"Examples:\n");
-  fprintf (stderr,"example -T 128 -f TVad.pgm -o TVad_thresh.pgm\n");
-  fprintf (stderr,"example -T 128 < TVad.pgm > TVad_thresh.pgm\n");
-  exit(1);
-}
-=end
-##############################################################################
-
 require 'optparse'
 
-options = {}
-OptionParser.new do |opts|
-  opts.banner = "Usage: example [options]"
+def parse_options
+  options = {}
+  OptionParser.new do |opts|
+    opts.banner = "Usage: example [options]"
 
-  opts.on("-f", "--input INPUT_FILE", "Use the PGM-format INPUT_FILE") do |input_file|
-    options[:input_file] = input_file
-  end
-  opts.on("-T", "--threshold THRESHOLD", "Set the threshold for the image") do |threshold|
-    options[:threshold] = threshold
-  end
-  opts.on("-o", "--output OUTPUT_FILE", "Write to the PGM-format OUTPUT_FILE") do |output_file|
-    options[:output_file] = output_file
-  end
-end.parse!
+    opts.on("-f", "--input INPUT_FILE", "Use the PGM-format INPUT_FILE") do |input_file|
+      options[:input_file] = input_file
+    end
+    opts.on("-T", "--threshold THRESHOLD", "Set the threshold for the image") do |threshold|
+      options[:threshold] = threshold
+    end
+    opts.on("-o", "--output OUTPUT_FILE", "Write to the PGM-format OUTPUT_FILE") do |output_file|
+      options[:output_file] = output_file
+    end
+  end.parse!
+  options
+end
+
+options = parse_options
 
 threshold = options[:threshold].to_i
 input_file = options[:input_file]
