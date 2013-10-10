@@ -53,6 +53,6 @@ end
 
 new_image = Image.new new_image_data, image.width, image.height
 
-output = File.open(output_file, 'w')
-output << new_image.to_pgm(threshold)
-output.close
+File.open(output_file, 'w') do |output|
+  output << new_image.to_pgm(threshold)
+end

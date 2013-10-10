@@ -6,21 +6,23 @@ class Image
   end
 
   def self.from_pgm filepath
-    file = File.open filepath
-    header = file.readline
-    unless header =~ /P5/
-      raise 'Invalid PGM format. This program only accepts P5'
+    File.open(filepath) do |file|
+      header = file.readline
+      unless header =~ /P5/
+        raise 'Invalid PGM format. This program only accepts P5'
+      end
+      column_count, row_count = file.readline.split.map(&:to_i)
+      file.readline
+      data = file.read.unpack("C*")
+      Image.new data, column_count, row_count
     end
-    column_count, row_count = file.readline.split.map(&:to_i)
-    file.readline
-    data = file.read.unpack("C*")
-    Image.new data, column_count, row_count
   end
 
   def self.from_raw filepath, width, height
-    file = File.open filepath
-    data = file.read.unpack("C*")
-    Image.new data, width, height
+    File.open(filepath) do |file|
+      data = file.read.unpack("C*")
+      Image.new data, width, height
+    end
   end
 
   # TODO clean up output
