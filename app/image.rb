@@ -1,13 +1,15 @@
 class Image
+  def initialize height, width
+    @height = height
+    @width = width
+  end
+
   def self.from_pgm filepath
-    Image.new
+    file = File.open filepath
+    file.readline
+    column_count, row_count = file.readline.split.map(&:to_i)
+    Image.new row_count, column_count
   end
 
-  def height
-    480
-  end
-
-  def width
-    640
-  end
+  attr_reader :height, :width
 end
