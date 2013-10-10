@@ -4,10 +4,16 @@ require 'minitest/autorun'
 describe Image do
 
   describe '#new' do
-    it 'takes and stores a height and width' do
-      image = Image.new(4, 5)
-      image.height.must_equal 4
-      image.width.must_equal 5
+    it 'takes and stores a height and width, and data' do
+      image = Image.new(sample_data, 4, 5)
+      image.data.must_equal sample_data
+      image.width.must_equal 4
+      image.height.must_equal 5
+    end
+
+    private
+    def sample_data
+      'abcde'
     end
   end
 
