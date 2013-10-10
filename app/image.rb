@@ -18,19 +18,23 @@ class Image
     end
   end
 
-  def self.from_raw filepath, width, height
-    File.open(filepath) do |file|
-      data = file.read.unpack("C*")
-      Image.new data, width, height
-    end
-  end
-
   def to_pgm
     output = "P5\n"
     output << "#{width} #{height}\n"
     output << "255\n"
     output << data.pack("C*")
     output
+  end
+
+  def to_raw
+    data.pack("C*")
+  end
+
+  def self.from_raw filepath, width, height
+    File.open(filepath) do |file|
+      data = file.read.unpack("C*")
+      Image.new data, width, height
+    end
   end
 
   def rows

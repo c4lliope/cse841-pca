@@ -43,6 +43,14 @@ describe Image do
     end
   end
 
+  describe 'to_raw' do
+    it 'is the inverse of from_raw' do
+      image = Image.from_raw File.absolute_path('test/images/grayson.raw'), 64, 88
+      File.open('output.raw', 'w') { |file| file << image.to_raw }
+      `diff test/images/grayson.raw output.raw`.must_equal ''
+    end
+  end
+
   private
 
   ImageInfo = Struct.new(:filepath, :width, :height)
