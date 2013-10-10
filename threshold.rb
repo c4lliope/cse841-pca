@@ -1,14 +1,9 @@
-=begin
-/*   This is an input and output example for using command-line arguments */
-/*   and pgm images                                                       */ 
+# This is an input and output example for using command-line arguments
+# and pgm images
+#
+# The program assigns pixels above a threshold to 255
+# ./example -T threshold_value -f input_image.pgm -o output_image.pgm
 
-/*   The program assigns pixels above a threshold to 255    */ 
-/*   ./example -T threshold_value -f input_image.pgm -o output_image.pgm */
-=end
-
-MAXNROW = 512
-MAXNCOL = 640
-MAX_FILENAME_LENGTH = 128
 black = 0
 
 require 'optparse'
