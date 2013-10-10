@@ -21,8 +21,8 @@ describe 'Thresholding' do
 
   private
   def test_threshold_value threshold
-    `ruby threshold.rb -f #{original} -T #{threshold} -o #{ruby_output} 2>&1`.must_equal `./#{c_executable} -f #{original} -T #{threshold} -o #{c_output} 2>&1`
-    `diff #{c_output} #{ruby_output}`.must_equal ''
+    `ruby threshold.rb -f #{original} -T #{threshold} -o #{ruby_output(threshold)}`
+    `diff #{expected_output(threshold)} #{ruby_output(threshold)}`.must_equal ''
   end
 
   def output_dir
@@ -33,15 +33,11 @@ describe 'Thresholding' do
     'test/test_image.pgm'
   end
 
-  def c_output
-    output_dir + "output_c.pgm"
+  def expected_output(threshold)
+    output_dir + "#{threshold}_expected.pgm"
   end
 
-  def ruby_output
-    output_dir + "output_rb.pgm"
-  end
-
-  def c_executable
-    output_dir + 'c_threshold.o'
+  def ruby_output(threshold)
+    output_dir + "#{threshold}_output.pgm"
   end
 end

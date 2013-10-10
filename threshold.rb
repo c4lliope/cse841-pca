@@ -41,7 +41,6 @@ end
 
 image = Image.from_pgm(input_file)
 
-$stderr.puts "thresh=#{threshold}"
 new_image_data = []
 image.data.each do |pixel|
   if pixel > threshold
@@ -54,5 +53,5 @@ end
 new_image = Image.new new_image_data, image.width, image.height
 
 File.open(output_file, 'w') do |output|
-  output << new_image.to_pgm(threshold)
+  output << new_image.to_pgm
 end
