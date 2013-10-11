@@ -1,4 +1,6 @@
 require_relative 'configuration'
+require_relative 'learning_algorithm'
+require_relative 'testing_algorithm'
 
 class DataSource
   def initialize(config)
@@ -9,6 +11,14 @@ class DataSource
   attr_reader :people
   attr_reader :image_count_for_class
   attr_reader :test_images
+
+  def algorithm
+    if config.mode == :learning
+      LearningAlgorithm.new(self)
+    else
+      TestingAlgorithm.new(self)
+    end
+  end
 
   private
   attr_reader :config
