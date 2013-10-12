@@ -18,16 +18,16 @@ class Vector < Array
 
   def + other_vector
     verify_same_dimension(other_vector)
-    (0...count).map do |i|
+    Vector.new((0...count).map do |i|
       self[i] + other_vector[i]
-    end
+    end)
   end
 
   def - other_vector
     verify_same_dimension(other_vector)
-    (0...count).map do |i|
+    Vector.new((0...count).map do |i|
       self[i] - other_vector[i]
-    end
+    end)
   end
 
   def magnitude
@@ -36,6 +36,17 @@ class Vector < Array
 
   def to_s
     "<#{join ','}>"
+  end
+
+  def == other
+    super(other) && other.class == self.class
+  end
+
+  def dot other
+    verify_same_dimension other
+    (0...count).map do |i|
+      self[i] * other[i]
+    end.reduce(&:+)
   end
 
   private

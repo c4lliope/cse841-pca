@@ -43,6 +43,14 @@ describe Vector do
     end
   end
 
+  describe 'dot product with another vector' do
+    it 'multiplies the elements and adds them together' do
+      a = Vector.new([1,2,3])
+      b = Vector.new([5,2,-1])
+      (a.dot b).must_equal 6
+    end
+  end
+
   describe '#magnitude' do
     it 'returns the magnitude' do
       Vector.new([0]).magnitude.must_equal 0
