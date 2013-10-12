@@ -58,4 +58,10 @@ describe Vector do
       Vector.new([3,4]).magnitude.must_equal 5
     end
   end
+
+  describe '#normal' do
+    it 'returns a unit vector in the same direction' do
+      Vector.new([3,4]).normal.must_equal Vector.new([0.6, 0.8])
+    end
+  end
 end

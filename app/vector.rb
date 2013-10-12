@@ -34,6 +34,10 @@ class Vector < Array
     Math.sqrt(map { |x| x**2 }.reduce(&:+))
   end
 
+  def normal
+    self / self.magnitude
+  end
+
   def to_s
     "<#{join ','}>"
   end
