@@ -11,24 +11,42 @@ describe CCIPCA do
 
     it 'sets the iteration count to 0' do
       pca = CCIPCA.new
-      pca.iterations.must_equal 0
+      pca.iteration.must_equal 0
     end
   end
 
   describe 'learning one image' do
-    it 'sets the 0th eigenvector to the image' do
+    it 'sets the mean to the image' do
       pca = CCIPCA.new
-      pca.learn image_data_vector
-      pca.mean.must_equal image_data_vector
+      pca.learn vector
+      pca.mean.must_equal vector
     end
 
     private
-    def image_data_vector
-      @_image_data_vector ||= Vector.new image.data
+    def vector
+      Vector.new [1,2]
+    end
+  end
+
+  describe 'learning two images' do
+    it 'sets the mean' do
+      pca = CCIPCA.new
+      pca.learn first_image_data
+      pca.learn second_image_data
+      pca.mean.must_equal mean_vector
     end
 
-    def image
-      Image.from_raw File.absolute_path('test/images/grayson.raw'), 64, 88
+    private
+    def first_image_data
+      Vector.new [1.0,2.0]
+    end
+
+    def second_image_data
+      Vector.new [2.0,1.0]
+    end
+
+    def mean_vector
+      (first_image_data + second_image_data) / 2
     end
   end
 end
