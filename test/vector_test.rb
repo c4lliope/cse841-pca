@@ -26,4 +26,20 @@ describe Vector do
       (Vector.new([3,6,9]) / 3).must_equal Vector.new([1,2,3])
     end
   end
+
+  describe 'addition with another vector' do
+    it 'adds the elements' do
+      a = Vector.new([1,2,3])
+      b = Vector.new([5,2,-1])
+      (a+b).must_equal Vector.new([6,4,2])
+    end
+  end
+
+  describe '#magnitude' do
+    it 'returns the magnitude' do
+      Vector.new([0]).magnitude.must_equal 0
+      Vector.new([1]).magnitude.must_equal 1
+      Vector.new([3,4]).magnitude.must_equal 5
+    end
+  end
 end
