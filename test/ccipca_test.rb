@@ -29,24 +29,31 @@ describe CCIPCA do
   end
 
   describe 'learning two images' do
-    it 'sets the mean' do
+    it 'sets the mean correctly' do
       pca = CCIPCA.new
-      pca.learn first_image_data
-      pca.learn second_image_data
+      pca.learn first_vector
+      pca.learn second_vector
       pca.mean.must_equal mean_vector
     end
 
+    it 'sets the first eigenvector' do
+      pca = CCIPCA.new
+      pca.learn first_vector
+      pca.learn second_vector
+      pca.eigenvectors[0].must_equal (second_vector - mean_vector)
+    end
+
     private
-    def first_image_data
+    def first_vector
       Vector.new [1.0,2.0]
     end
 
-    def second_image_data
+    def second_vector
       Vector.new [2.0,1.0]
     end
 
     def mean_vector
-      (first_image_data + second_image_data) / 2
+      (first_vector + second_vector) / 2
     end
   end
 end

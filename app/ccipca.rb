@@ -1,6 +1,8 @@
 require_relative 'vector'
 
 class CCIPCA
+  attr_reader :eigenvectors, :iteration, :mean
+
   def initialize
     @eigenvectors = []
     @iteration = 0
@@ -9,11 +11,23 @@ class CCIPCA
   def learn vector
     @iteration += 1
     update_mean vector
+    update_eigenvector 1, scatter(vector)
   end
 
-  attr_reader :eigenvectors, :iteration, :mean
-
   private
+
+  def update_eigenvector index, vector
+    response = vector.dot eigenvector[index].normal
+    @eigenvector[index] = eigenvector[index] * retention_rate +
+      vector * response * learning_rate
+    residual = vector - eigenvector[index].normal * response
+    update_eigenvector index + 1, residual
+  end
+
+  def scatter vector
+    vector - mean
+  end
+
   def update_mean vector
     @mean ||= vector
     @mean = vector * (1.0/t) + mean * (t - 1.0)/t
