@@ -10,42 +10,71 @@ class LearningAlgorithm < Algorithm
 
   attr_accessor :eigenvectors
 
-  def k
-    max_eigenvector_count = 5
-  end
-
   def run
-    vectors = source.image_data_vectors
-    (0..vectors.count).each do |t|
+    eigenvectors[0] = mean_vector
+    puts "="*vectors.count
+    (0...vectors.count).each do |t|
+      print "."
       t = t.to_f
       vector = vectors[t]
-      mean_vector ||= Vector.zero(vector.count)
-      mean_vector = (mean_vector * t/(t+1)) + (vector * 1/(t+1))
       scatter = vector - mean_vector
 
       residual = scatter
-      # Calculate the i-th component of the dense response y
-      components = []
-      1.upto(min(k,t)) do |i|
+      1.upto(min(max_eigenvector_count,t)) do |i|
         if i == t
           eigenvectors[i] = residual
         else
-          scaling_factor = eigenvectors[i] / eigenvectors[i].magnitude
-          y = residual.dot(scaling_factor)
-          w1 = (t - 1 - mu) / t
-          w2 = (1 + mu)/t
-          eigenvectors[i] = (eigenvectors[i] * w1) + (residual * w2 * y)
-          residual = residual - (scaling_factor * y)
+          normalized_eigenvector = eigenvectors[i] / eigenvectors[i].magnitude
+          similarity_to_eigenvector = residual.dot(normalized_eigenvector)
+          memory_weight = (t - 1 - amnesia) / t
+          new_vector_weight = (1 + amnesia)/t
+          eigenvectors[i] = (eigenvectors[i] * memory_weight) +
+            (residual * similarity_to_eigenvector * new_vector_weight)
+          residual = residual - (normalized_eigenvector * similarity_to_eigenvector)
         end
       end
     end
+
+    output_eigenvectors
   end
 
-  def mu
-    amnesia = 3.0
+  private
+  def vectors
+    @_vectors ||= source.image_data_vectors
+  end
+
+  def mean_vector
+    @_mean_vector ||= mean vectors
+  end
+
+  def output_eigenvectors
+    puts "Calculated #{eigenvectors.count} eigenvectors"
+    puts "Outputting to 'output' directory"
+
+    eigenvectors.each_with_index do |data, index|
+      output data, "eigen_#{index}"
+    end
+  end
+
+  def amnesia
+    0.0
   end
 
   def min(a,b)
     a < b ? a : b
+  end
+
+  def mean vectors
+    vectors.reduce(&:+) / vectors.count
+  end
+
+  def output data, filename
+    File.open(File.absolute_path("output/#{filename}.pgm"), 'w') do |file|
+      file << Image.new(data, 64, 88).to_pgm
+    end
+  end
+
+  def max_eigenvector_count
+    100
   end
 end

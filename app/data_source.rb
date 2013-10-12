@@ -29,6 +29,10 @@ class DataSource
     end
   end
 
+  def epochs
+    config.epochs
+  end
+
   private
   attr_reader :config
 
