@@ -1,6 +1,7 @@
 require_relative 'configuration'
 require_relative 'learning_algorithm'
 require_relative 'testing_algorithm'
+require_relative 'image'
 
 class DataSource
   def initialize(config)
@@ -17,6 +18,14 @@ class DataSource
       LearningAlgorithm.new(self)
     else
       TestingAlgorithm.new(self)
+    end
+  end
+
+  def image_data_vectors
+    test_images.map do |filename|
+      path = File.absolute_path(File.join(File.split(config.image_index).first, filename))
+      image = Image.from_raw(path, 64, 88)
+      Vector.new(image.data)
     end
   end
 
