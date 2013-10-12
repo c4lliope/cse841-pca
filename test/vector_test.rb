@@ -35,6 +35,14 @@ describe Vector do
     end
   end
 
+  describe 'subtraction from another vector' do
+    it 'subtracts the elements' do
+      a = Vector.new([1,2,3])
+      b = Vector.new([5,2,-1])
+      (a-b).must_equal Vector.new([-4,0,4])
+    end
+  end
+
   describe '#magnitude' do
     it 'returns the magnitude' do
       Vector.new([0]).magnitude.must_equal 0

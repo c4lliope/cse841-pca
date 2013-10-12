@@ -17,11 +17,16 @@ class Vector < Array
   end
 
   def + other_vector
-    unless other_vector.count == count
-      raise "Error. Tried to add two vectors of different lengths"
-    end
+    verify_same_dimension(other_vector)
     (0...count).map do |i|
       self[i] + other_vector[i]
+    end
+  end
+
+  def - other_vector
+    verify_same_dimension(other_vector)
+    (0...count).map do |i|
+      self[i] - other_vector[i]
     end
   end
 
@@ -31,5 +36,12 @@ class Vector < Array
 
   def to_s
     "<#{join ','}>"
+  end
+
+  private
+  def verify_same_dimension other_vector
+    unless other_vector.count == count
+      raise "Error. Tried to add two vectors of different lengths"
+    end
   end
 end
