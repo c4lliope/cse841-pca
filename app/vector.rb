@@ -53,10 +53,17 @@ class Vector < Array
     end.reduce(&:+)
   end
 
+  def div other
+    verify_same_dimension(other)
+    Vector.new((0...count).map do |i|
+      self[i] / other[i]
+    end)
+  end
+
   private
   def verify_same_dimension other_vector
     unless other_vector.count == count
-      raise "Error. Tried to add two vectors of different lengths"
+      raise "Error. Tried to operate on two vectors of different lengths"
     end
   end
 end

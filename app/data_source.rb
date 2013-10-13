@@ -23,6 +23,9 @@ class DataSource
 
   def image_data_vectors
     test_images.map do |filename|
+      unless /\./ =~ filename
+        filename += '.raw'
+      end
       path = File.absolute_path(File.join(File.split(config.image_index).first, filename))
       image = Image.from_raw(path, 64, 88)
       Vector.new(image.data)

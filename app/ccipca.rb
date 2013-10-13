@@ -18,6 +18,10 @@ class CCIPCA
     end
   end
 
+  def score vector
+    residual_from_eigenvectors 1, scatter(vector)
+  end
+
   def write path
     File.open path, 'w' do |file|
       file << YAML::dump(self)
@@ -37,6 +41,16 @@ class CCIPCA
   end
 
   private
+
+  def residual_from_eigenvectors index, vector
+    if index >= eigenvectors.count
+      vector
+    else
+      response = vector.dot eigenvectors[index].normal
+      residual = vector - eigenvectors[index].normal * response
+      residual_from_eigenvectors index + 1, residual
+    end
+  end
 
   def update_eigenvector index, vector
     return if index > max_eigen_count
