@@ -1,53 +1,30 @@
 require_relative 'algorithm'
 require_relative 'vector'
+require_relative 'ccipca'
 
 class LearningAlgorithm < Algorithm
   def initialize(source)
     @source = source
-    @eigenvectors = []
-    @iteration = 0
+    @pca = CCIPCA.new
   end
 
-  attr_accessor :eigenvectors
-
   def run
-    eigenvectors[0] = mean_vector
+    vectors = source.image_data_vectors
     puts "="*vectors.count
-    (0...vectors.count).each do |t|
-      print "."
-      t = t.to_f
-      vector = vectors[t]
-      scatter = vector - mean_vector
-
-      residual = scatter
-      1.upto(min(max_eigenvector_count,t)) do |i|
-        if i == t
-          eigenvectors[i] = residual
-        else
-          normalized_eigenvector = eigenvectors[i] / eigenvectors[i].magnitude
-          similarity_to_eigenvector = residual.dot(normalized_eigenvector)
-          memory_weight = (t - 1 - amnesia) / t
-          new_vector_weight = (1 + amnesia)/t
-          eigenvectors[i] = (eigenvectors[i] * memory_weight) +
-            (residual * similarity_to_eigenvector * new_vector_weight)
-          residual = residual - (normalized_eigenvector * similarity_to_eigenvector)
-        end
-      end
+    vectors.each do |vector|
+      print '.'
+      pca.learn vector
     end
-
+    puts
     output_eigenvectors
   end
 
   private
-  def vectors
-    @_vectors ||= source.image_data_vectors
-  end
-
-  def mean_vector
-    @_mean_vector ||= mean vectors
-  end
+  attr_reader :pca, :source
 
   def output_eigenvectors
+    eigenvectors = pca.eigenvectors
+    eigenvectors.shift
     puts "Calculated #{eigenvectors.count} eigenvectors"
     puts "Outputting to 'output' directory"
 
@@ -56,25 +33,9 @@ class LearningAlgorithm < Algorithm
     end
   end
 
-  def amnesia
-    0.0
-  end
-
-  def min(a,b)
-    a < b ? a : b
-  end
-
-  def mean vectors
-    vectors.reduce(&:+) / vectors.count
-  end
-
   def output data, filename
     File.open(File.absolute_path("output/#{filename}.pgm"), 'w') do |file|
-      file << Image.new(data, 64, 88).to_pgm
+      file << Image.new(data, 64, 88).normalize.to_pgm
     end
-  end
-
-  def max_eigenvector_count
-    100
   end
 end
