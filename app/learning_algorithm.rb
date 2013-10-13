@@ -9,7 +9,7 @@ class LearningAlgorithm < Algorithm
   end
 
   def run
-    vectors = source.image_data_vectors
+    vectors = source.image_data_vectors * source.epochs
     puts "="*vectors.count
     vectors.each do |vector|
       print '.'
