@@ -22,8 +22,18 @@ class Image
     output = "P5\n"
     output << "#{width} #{height}\n"
     output << "255\n"
-    output << data.pack("C*")
+    output << data.map(&:round).pack("C*")
     output
+  end
+
+  def normalize
+    min = data.min
+    max = data.max
+    d = data.map do |x|
+      n = (x.to_f - min) / (max - min)
+      n * 255
+    end
+    Image.new d, width, height
   end
 
   def to_raw

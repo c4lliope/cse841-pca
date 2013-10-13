@@ -51,6 +51,16 @@ describe Image do
     end
   end
 
+  describe '#normalize' do
+    describe 'with extreme values' do
+      it 'bounds the range to [0,255]' do
+        image = Image.new([-100, 0, 100], 3, 1)
+        new = image.normalize
+        new.data.must_equal([0,127.5,255])
+      end
+    end
+  end
+
   private
 
   ImageInfo = Struct.new(:filepath, :width, :height)
