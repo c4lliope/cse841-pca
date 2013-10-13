@@ -19,7 +19,7 @@ class CCIPCA
   end
 
   def score vector
-    residual_from_eigenvectors 1, scatter(vector)
+    basis_from_eigenvectors 1, scatter(vector)
   end
 
   def write path
@@ -42,13 +42,13 @@ class CCIPCA
 
   private
 
-  def residual_from_eigenvectors index, vector
+  def basis_from_eigenvectors index, vector
     if index >= eigenvectors.count
-      vector
+      []
     else
       response = vector.dot eigenvectors[index].normal
       residual = vector - eigenvectors[index].normal * response
-      residual_from_eigenvectors index + 1, residual
+      [response] + basis_from_eigenvectors(index + 1, residual)
     end
   end
 
