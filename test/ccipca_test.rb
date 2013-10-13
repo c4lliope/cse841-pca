@@ -90,4 +90,33 @@ describe CCIPCA do
       vectors.reduce(&:+) / vectors.count
     end
   end
+
+  describe '#load' do
+    it 'is the opposite of #write' do
+      learn_vectors
+      pca.write 'tmp/database'
+      CCIPCA.load('tmp/database').must_equal pca
+    end
+
+    private
+    def pca
+      @_pca ||= CCIPCA.new
+    end
+
+    def learn_vectors
+      vectors.each { |v| pca.learn v }
+    end
+
+    def vectors
+      [
+        Vector.new([1.0, -2.0, 3.0]),
+        Vector.new([5.0, 8.0, -1.0]),
+        Vector.new([2.0, 1.0, 1.0]),
+      ]
+    end
+
+    def mean_vector
+      vectors.reduce(&:+) / vectors.count
+    end
+  end
 end
