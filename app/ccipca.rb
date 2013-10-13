@@ -31,13 +31,11 @@ class CCIPCA
     (0...archived_bases.keys.count).each do |index|
       candidate = archived_bases.keys[index]
       displacement = query - candidate
-      puts "index #{index}, score: #{displacement.magnitude}"
       if displacement.magnitude < previous_closest
         closest_index = index
         previous_closest = displacement.magnitude
       end
     end
-    puts "Selected matching index: #{closest_index}"
     base = archived_bases.keys[closest_index]
     archived_bases[base]
   end
