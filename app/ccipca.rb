@@ -49,6 +49,7 @@ class CCIPCA
   def update_mean vector
     @mean ||= vector
     @mean = vector * (1.0/t) + mean * (t - 1.0)/t
+    @eigenvectors[0] = @mean
   end
 
   def t

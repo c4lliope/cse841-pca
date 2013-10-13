@@ -24,7 +24,6 @@ class LearningAlgorithm < Algorithm
 
   def output_eigenvectors
     eigenvectors = pca.eigenvectors
-    eigenvectors.shift
     puts "Calculated #{eigenvectors.count} eigenvectors"
     puts "Outputting to 'output' directory"
 
