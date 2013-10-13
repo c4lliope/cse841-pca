@@ -26,25 +26,35 @@ class CCIPCA
 
   def closest_neighbor vector
     query = Vector.new(basis_from_eigenvectors(0, scatter(vector)))
-    closest = archived_bases.keys.min do |candidate|
+    closest_index = 0
+    previous_closest = 10000000
+    (0...archived_bases.keys.count).each do |index|
+      candidate = archived_bases.keys[index]
       displacement = query - candidate
-      displacement.magnitude
+      puts "index #{index}, score: #{displacement.magnitude}"
+      if displacement.magnitude < previous_closest
+        closest_index = index
+        previous_closest = displacement.magnitude
+      end
     end
-    archived_bases[closest]
+    puts "Selected matching index: #{closest_index}"
+    base = archived_bases.keys[closest_index]
+    archived_bases[base]
   end
 
   def archived_bases
-    @_bases_for_archvied ||= begin
-                               puts "Calculating bases for archived vectors"
-                               bases = {}
-                               puts '=' * @vector_archive.count
-                               @vector_archive.each do |archived|
-                                 print '.'
-                                 bases[Vector.new(basis_from_eigenvectors(0, scatter(archived)))] = archived
-                               end
-                               puts
-                               bases
-                             end
+    @_archived_bases ||= begin
+                           puts "Calculating bases for archived vectors"
+                           bases = {}
+                           puts '=' * @vector_archive.count
+                           @vector_archive.each do |archived|
+                             print '.'
+                             new_basis = Vector.new(basis_from_eigenvectors(0, scatter(archived)))
+                             bases[new_basis] = archived
+                           end
+                           puts
+                           bases
+                         end
   end
 
   def write path
