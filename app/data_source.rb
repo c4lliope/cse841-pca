@@ -33,6 +33,10 @@ class DataSource
     config.epochs
   end
 
+  def database_path
+    config.network_file
+  end
+
   private
   attr_reader :config
 

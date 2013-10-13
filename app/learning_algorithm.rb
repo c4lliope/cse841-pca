@@ -16,11 +16,17 @@ class LearningAlgorithm < Algorithm
       pca.learn vector
     end
     puts
+    save_database
     output_eigenvectors
   end
 
   private
   attr_reader :pca, :source
+
+  def save_database
+    puts "Writing database to #{source.database_path}"
+    pca.write source.database_path
+  end
 
   def output_eigenvectors
     eigenvectors = pca.eigenvectors
