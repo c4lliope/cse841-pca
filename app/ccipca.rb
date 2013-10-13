@@ -1,11 +1,12 @@
 require_relative 'vector'
 
 class CCIPCA
-  attr_reader :eigenvectors, :iteration, :mean
+  attr_reader :eigenvectors, :iteration, :mean, :max_eigen_count
 
-  def initialize
+  def initialize(eigen_count = 50)
     @eigenvectors = []
     @iteration = 0
+    @max_eigen_count = eigen_count
   end
 
   def learn vector
@@ -19,6 +20,7 @@ class CCIPCA
   private
 
   def update_eigenvector index, vector
+    return if index > max_eigen_count
     if index >= eigenvectors.count
       @eigenvectors[index] = vector
     else
