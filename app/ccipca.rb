@@ -4,14 +4,16 @@ require 'yaml'
 class CCIPCA
   attr_reader :eigenvectors, :iteration, :mean, :max_eigen_count
 
-  def initialize(eigen_count = 50)
+  def initialize(eigen_count = 64)
     @eigenvectors = []
     @iteration = 0
     @max_eigen_count = eigen_count
+    @vector_archive = []
   end
 
   def learn vector
     @iteration += 1
+    @vector_archive << vector
     update_mean vector
     if iteration > 1
       update_eigenvector 1, scatter(vector)
@@ -22,7 +24,31 @@ class CCIPCA
     basis_from_eigenvectors 1, scatter(vector)
   end
 
+  def closest_neighbor vector
+    query = Vector.new(basis_from_eigenvectors(0, scatter(vector)))
+    closest = archived_bases.keys.min do |candidate|
+      displacement = query - candidate
+      displacement.magnitude
+    end
+    archived_bases[closest]
+  end
+
+  def archived_bases
+    @_bases_for_archvied ||= begin
+                               puts "Calculating bases for archived vectors"
+                               bases = {}
+                               puts '=' * @vector_archive.count
+                               @vector_archive.each do |archived|
+                                 print '.'
+                                 bases[Vector.new(basis_from_eigenvectors(0, scatter(archived)))] = archived
+                               end
+                               puts
+                               bases
+                             end
+  end
+
   def write path
+    @vector_archive.uniq!
     File.open path, 'w' do |file|
       file << YAML::dump(self)
     end
