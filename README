@@ -1,0 +1,17 @@
+Grayson Wright
+CSE 841 - Artificial Intelligence
+Homework 2 - CCI PCA
+
+Please make the program by typing 'make'
+
+Then, run the program as follows:
+ruby pcanet.rb -l EPOCHS -f INPUT_FILE -o OUTPUT_FILE -d DATABASE
+
+Description of Submission:
+
+./script : A recording of the output of running the program twice --
+    once for learning and once for testing
+./learn_output.txt: The report file for the learning part
+./test_output.txt: The report file for the testing part
+./app: Source code
+./pcanet.rb: source code runner

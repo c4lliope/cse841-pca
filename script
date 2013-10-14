@@ -1,0 +1,12 @@
+> ruby pcanet.rb -f 841-440-Fall13/traininglist.txt -d database -o learn_output.txt -l 4
+Learning images... this may take a while
+Writing database to database, this may take a while
+Calculated 10 principal components
+Outputting to 'mef' directory
+
+> ruby pcanet.rb -f 841-440-Fall13/testinglist.txt -d database -o test_output.txt
+mkdir: mef: File exists
+Loading PCA from database
+Database loaded
+54 images to test
+Calculating bases for archived vectors -- this may take a while

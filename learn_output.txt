@@ -1,0 +1,20 @@
+Output for pcanet.rb by Grayson Wright
+Learning mode
+4 epochs
+Database file: database
+Testing List: 841-440-Fall13/traininglist.txt
+138 images read
+10 MEFs calculated
+
+Mean filename: mef/0.pmf
+
+MEF image #1: mef/1.pgm
+MEF image #2: mef/2.pgm
+MEF image #3: mef/3.pgm
+MEF image #4: mef/4.pgm
+MEF image #5: mef/5.pgm
+MEF image #6: mef/6.pgm
+MEF image #7: mef/7.pgm
+MEF image #8: mef/8.pgm
+MEF image #9: mef/9.pgm
+MEF image #10: mef/10.pgm

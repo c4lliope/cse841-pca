@@ -1,0 +1,160 @@
+# Facial Recognition
+
+## Design
+
+| File | Purpose |
+| -------------- |
+| configuration.rb | Read and parse command-line arguments |
+| data_source.rb | supplies data to the algorithms |
+| image.rb | Read and write image files |
+| vector.rb | Supports basic vector operations |
+| testing_algorithm.rb | finds matches for input images |
+| learning_algorithm.rb | learns from data |
+| ccipca.rb | an incremental learning CCIPCA system |
+
+## Recognition rates
+
+- 54 test images
+- 54 images recognized
+- 100% recognition rate
+
+## Time spent
+
+| Task | Time |
+| ----------- |
+| Programming | 30.5 hours |
+| Written Problems | 2 hours |
+
+<section></section>
+
+## MEF images
+
+<% (0..63).each do |i| %>
+  <% caption = (i == 0 ? "Mean" : "MEF ##{i}") %>
+  <div class="image">
+    ![MEF <%=i%>](converted/mef/<%=i%>.png)
+    <span><%=caption%></span>
+  </div>
+<% end %>
+
+<section></section>
+
+## Recognized images
+
+<% (0...54).each do |i| %>
+  <div class="pair">
+    <div class="image">
+      ![MEF <%=i%>](converted/matches/<%=i%>_image.png)
+      <span>Image <%=i%></span>
+    </div>
+    <div class="image">
+      ![MEF <%=i%>](converted/matches/<%=i%>_match.png)
+      <span>Match <%=i%></span>
+    </div>
+  </div>
+<% end %>
+
+<section></section>
+
+## Script
+
+    > ruby pcanet.rb -f 841-440-Fall13/traininglist.txt -d database -o learn_output.txt -l 4
+    Learning images... this may take a while
+    Writing database to database, this may take a while
+    Calculated 10 principal components
+    Outputting to 'mef' directory
+
+    > ruby pcanet.rb -f 841-440-Fall13/testinglist.txt -d database -o test_output.txt
+    mkdir: mef: File exists
+    Loading PCA from database
+    Database loaded
+    54 images to test
+    Calculating bases for archived vectors -- this may take a while
+
+## Learning output file
+
+    Output for pcanet.rb by Grayson Wright
+    Learning mode
+    4 epochs
+    Database file: database
+    Testing List: 841-440-Fall13/traininglist.txt
+    138 images read
+    10 MEFs calculated
+
+    Mean filename: mef/0.pmf
+
+    MEF image #1: mef/1.pgm
+    MEF image #2: mef/2.pgm
+    MEF image #3: mef/3.pgm
+    MEF image #4: mef/4.pgm
+    MEF image #5: mef/5.pgm
+    MEF image #6: mef/6.pgm
+    MEF image #7: mef/7.pgm
+    MEF image #8: mef/8.pgm
+    MEF image #9: mef/9.pgm
+    MEF image #10: mef/10.pgm
+
+## Testing output file
+
+    Output for pcanet.rb by Grayson Wright
+    Testing mode
+    Database file: database
+    Testing List: 841-440-Fall13/testinglist.txt
+
+    Input image -> Matched image (distance)
+    ---------------------------------------
+    Adam3.raw -> Adam1.raw (1790)
+    Adam5.raw -> Adam6.raw (1385)
+    AdamTa3.raw -> AdamTa4.raw (2002)
+    AdamTa5.raw -> AdamTa4.raw (1945)
+    Ashley3.raw -> Ashley2.raw (2837)
+    Ashley5.raw -> Ashley1.raw (2371)
+    Austin3.raw -> Austin8.raw (2323)
+    Austin5.raw -> Austin8.raw (2574)
+    Brian3.raw -> Brian8.raw (1496)
+    Brian5.raw -> Brian4.raw (2149)
+    Chris3.raw -> Chris2.raw (2252)
+    Chris5.raw -> Chris2.raw (1619)
+    Cody3.raw -> Cody6.raw (2652)
+    Cody5.raw -> Cody2.raw (1944)
+    David3.raw -> David6.raw (2250)
+    David5.raw -> David6.raw (1709)
+    Dongbo3.raw -> Dongbo6.raw (1823)
+    Dongbo5.raw -> Dongbo7.raw (1882)
+    Eman3.raw -> Eman4.raw (3335)
+    Eman5.raw -> Eman1.raw (1921)
+    Eric3.raw -> Eric6.raw (1470)
+    Eric5.raw -> Eric2.raw (1076)
+    Gerald3.raw -> Gerald6.raw (1666)
+    Gerald5.raw -> Gerald6.raw (1112)
+    Grayson3.raw -> Grayson7.raw (1952)
+    Grayson5.raw -> Grayson2.raw (1224)
+    James3.raw -> James6.raw (1493)
+    James5.raw -> James6.raw (1521)
+    Jenna3.raw -> Jenna4.raw (2112)
+    Jenna5.raw -> Jenna7.raw (2417)
+    Justin3.raw -> Justin2.raw (2198)
+    Justin5.raw -> Justin6.raw (2579)
+    Keyur3.raw -> Keyur7.raw (2387)
+    Keyur5.raw -> Keyur7.raw (1982)
+    kudai3.raw -> kudai7.raw (2230)
+    kudai5.raw -> kudai2.raw (2410)
+    NG3.raw -> NG7.raw (1890)
+    NG5.raw -> NG7.raw (2691)
+    Nicholas3.raw -> Nicholas4.raw (1507)
+    Nicholas5.raw -> Nicholas7.raw (1433)
+    Noor3.raw -> Noor6.raw (1251)
+    Noor5.raw -> Noor2.raw (1234)
+    Peng3.raw -> Peng2.raw (1956)
+    Peng5.raw -> Peng1.raw (1567)
+    Peter3.raw -> Peter7.raw (3399)
+    Peter5.raw -> Peter2.raw (2592)
+    Renee3.raw -> Renee2.raw (1904)
+    Renee5.raw -> Renee4.raw (2278)
+    Scott3.raw -> Scott4.raw (2381)
+    Scott5.raw -> Scott7.raw (3005)
+    Tim3.raw -> Tim6.raw (1345)
+    Tim5.raw -> Tim1.raw (2093)
+    xiliu3.raw -> xiliu2.raw (2114)
+    xiliu5.raw -> xiliu4.raw (3166)
+

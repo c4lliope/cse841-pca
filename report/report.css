@@ -1,0 +1,31 @@
+div.image {
+  display: inline-block;
+  width: 90px;
+  max-height: 100px;
+  padding: 2px 5px;
+  margin-bottom: 0;
+}
+
+div.image img {
+  max-height: 80px;
+  margin: 0 10px;
+  padding: 0;
+}
+
+div.image span {
+  margin: 0;
+  padding: 0 15px;
+  font-size: .6em;
+  max-height: 20px;
+}
+
+div.pair {
+  display: inline-block;
+  max-width: 70px;
+  background-color: #DDD;
+  margin: 2px;
+}
+
+section {
+  page-break-after: always;
+}
