@@ -42,6 +42,10 @@ class DataSource
     config.output_file
   end
 
+  def input_file
+    config.image_index
+  end
+
   private
   attr_reader :config
 

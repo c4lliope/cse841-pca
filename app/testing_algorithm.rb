@@ -15,14 +15,7 @@ class TestingAlgorithm
       write index, image, @matches[image]
     end
     puts
-    display_matches
     output_report
-  end
-
-  def display_matches
-    @matches.each do |query, match|
-      puts "#{query.path}: matched with #{match.path}"
-    end
   end
 
   private
@@ -48,6 +41,36 @@ class TestingAlgorithm
   end
 
   def output_report
-    # TODO write report
+    File.open(output_file, 'w') do |file|
+      file.write(report)
+    end
+  end
+
+  def report
+    header + seperator + match_report
+  end
+
+  def header
+    "Output for pcanet.rb by Grayson Wright
+    Testing mode
+    Database file: #{source.database_path}
+    Testing List: #{source.input_file}"
+  end
+
+  def seperator
+    "\n"*2
+  end
+
+  def match_report
+    "Input image -> Matched image (distance)\n" +
+      "---------------------------------------\n" +
+    (@matches.map do |query, match|
+        displacement = query.to_vector - match.to_vector
+          "#{query.path} -> #{match.path} (#{displacement.magnitude.round})"
+      end.join "\n")
+  end
+
+  def output_file
+    source.output_file
   end
 end
