@@ -29,20 +29,16 @@ class TestingAlgorithm
   attr_reader :pca, :source
 
   def write index, image, match
-    File.open("output/#{index}_image.pgm", 'w') do |file|
+    File.open("matches/#{index}_image.pgm", 'w') do |file|
       file << image.to_pgm
     end
-    File.open("output/#{index}_match.pgm", 'w') do |file|
+    File.open("matches/#{index}_match.pgm", 'w') do |file|
       file << match.to_pgm
     end
   end
 
   def images
     @_images ||= source.images.freeze
-  end
-
-  def vectors
-    @_vectors ||= source.image_data_vectors.freeze
   end
 
   def load_pca

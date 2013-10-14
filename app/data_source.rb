@@ -20,12 +20,6 @@ class DataSource
     end
   end
 
-  def image_data_vectors
-    @_image_data_vectors ||= images.map do |image|
-      image.to_vector
-    end
-  end
-
   def images
     @_images ||= test_images.map do |filename|
       unless /\./ =~ filename

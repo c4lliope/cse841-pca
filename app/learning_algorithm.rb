@@ -32,7 +32,7 @@ class LearningAlgorithm < Algorithm
   def output_eigenvectors
     eigenvectors = pca.eigenvectors
     puts "Calculated #{eigenvectors.count} eigenvectors"
-    puts "Outputting to 'output' directory"
+    puts "Outputting to 'mef' directory"
 
     eigenvectors.each_with_index do |data, index|
       output data, "eigen_#{index}"
@@ -40,7 +40,7 @@ class LearningAlgorithm < Algorithm
   end
 
   def output data, filename
-    File.open(File.absolute_path("output/#{filename}.pgm"), 'w') do |file|
+    File.open(File.absolute_path("mef/#{filename}.pgm"), 'w') do |file|
       file << Image.new(data, 64, 88).normalize.to_pgm
     end
   end
