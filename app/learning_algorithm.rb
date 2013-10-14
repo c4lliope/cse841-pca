@@ -1,5 +1,7 @@
 # CSE 841 Homework 2: CCI PCA
 # Submission by Grayson Wright
+# LearningAlgorithm
+# Runs the learning portion of the assignment
 # ============================
 
 require_relative 'algorithm'

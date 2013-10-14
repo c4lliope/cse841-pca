@@ -1,5 +1,7 @@
 # CSE 841 Homework 2: CCI PCA
 # Submission by Grayson Wright
+# DataSource
+# Pass data to the algorithms
 # ============================
 
 require_relative 'configuration'

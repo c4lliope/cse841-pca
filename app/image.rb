@@ -1,5 +1,7 @@
 # CSE 841 Homework 2: CCI PCA
 # Submission by Grayson Wright
+# Image
+# Reading and writing to image files
 # ============================
 
 class Image

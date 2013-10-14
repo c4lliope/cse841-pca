@@ -1,5 +1,8 @@
 # CSE 841 Homework 2: CCI PCA
 # Submission by Grayson Wright
+# Vector
+# An object that supports basic vector operations
+# e.g. addition, subtraction, dot product, normalization, etc.
 # ============================
 
 class Vector < Array

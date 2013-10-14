@@ -1,5 +1,7 @@
 # CSE 841 Homework 2: CCI PCA
 # Submission by Grayson Wright
+# CCIPCA
+# Learning system for image principal components
 # ============================
 
 require_relative 'vector'

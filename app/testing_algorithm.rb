@@ -1,5 +1,7 @@
 # CSE 841 Homework 2: CCI PCA
 # Submission by Grayson Wright
+# TestingAlgorithm
+# Runs the testing portion of the assignment
 # ============================
 
 require_relative 'algorithm'
@@ -58,9 +60,9 @@ Testing List: #{source.input_file}"
   def match_report
     "Input image -> Matched image (distance)\n" +
       "---------------------------------------\n" +
-    (@matches.map do |query, match|
+      (@matches.map do |query, match|
         displacement = query.to_vector - match.to_vector
-          "#{query.path} -> #{match.path} (#{displacement.magnitude.round})"
+        "#{query.path} -> #{match.path} (#{displacement.magnitude.round})"
       end.join "\n")
   end
 
