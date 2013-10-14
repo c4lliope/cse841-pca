@@ -10,12 +10,10 @@ class LearningAlgorithm < Algorithm
 
   def run
     images = source.images * source.epochs
-    puts "="*images.count
+    puts "Learning images... this may take a while"
     images.each do |image|
-      print '.'
       pca.learn_image image
     end
-    puts
     save_database
     output_report
     output_eigenvectors
@@ -25,7 +23,7 @@ class LearningAlgorithm < Algorithm
   attr_reader :pca, :source
 
   def save_database
-    puts "Writing database to #{source.database_path}"
+    puts "Writing database to #{source.database_path}, this may take a while"
     pca.write source.database_path
   end
 

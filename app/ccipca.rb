@@ -48,16 +48,13 @@ class CCIPCA
 
   def archived_bases
     @_archived_bases ||= begin
-                           puts "Calculating bases for archived vectors"
+                           puts "Calculating bases for archived vectors -- this may take a while"
                            bases = {}
-                           puts '=' * @image_archive.count
                            @image_archive.each do |archived|
-                             print '.'
                              vector = archived.to_vector
                              new_basis = Vector.new(basis_from_eigenvectors(0, scatter(vector)))
                              bases[new_basis] = archived
                            end
-                           puts
                            bases
                          end
   end
