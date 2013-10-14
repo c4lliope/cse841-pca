@@ -1,9 +1,12 @@
 class Image
-  def initialize data, width, height
+  def initialize data, width, height, path = nil
     @data = data
     @height = height
     @width = width
+    @path = path
   end
+
+  attr_accessor :path
 
   def self.from_pgm filepath
     File.open(filepath) do |file|
@@ -40,10 +43,14 @@ class Image
     data.pack("C*")
   end
 
-  def self.from_raw filepath, width, height
+  def to_vector
+    Vector.new data
+  end
+
+  def self.from_raw filepath, width, height, name
     File.open(filepath) do |file|
       data = file.read.unpack("C*")
-      Image.new data, width, height
+      Image.new data, width, height, name
     end
   end
 

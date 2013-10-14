@@ -9,14 +9,15 @@ class LearningAlgorithm < Algorithm
   end
 
   def run
-    vectors = source.image_data_vectors * source.epochs
-    puts "="*vectors.count
-    vectors.each do |vector|
+    images = source.images * source.epochs
+    puts "="*images.count
+    images.each do |image|
       print '.'
-      pca.learn vector
+      pca.learn_image image
     end
     puts
     save_database
+    output_report
     output_eigenvectors
   end
 
@@ -42,5 +43,19 @@ class LearningAlgorithm < Algorithm
     File.open(File.absolute_path("output/#{filename}.pgm"), 'w') do |file|
       file << Image.new(data, 64, 88).normalize.to_pgm
     end
+  end
+
+  def output_report
+    File.open report_file, 'w' do |file|
+      file << report
+    end
+  end
+
+  def report_file
+    source.output_file
+  end
+
+  def report
+    "TODO The report string"
   end
 end

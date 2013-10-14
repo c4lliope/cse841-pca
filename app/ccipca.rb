@@ -8,18 +8,24 @@ class CCIPCA
     @eigenvectors = []
     @iteration = 0
     @max_eigen_count = eigen_count
-    @vector_archive = []
+    @image_archive = []
   end
 
+  def learn_image image
+    @image_archive << image
+    learn image.to_vector
+  end
+
+  private
   def learn vector
     @iteration += 1
-    @vector_archive << vector
     update_mean vector
     if iteration > 1
       update_eigenvector 1, scatter(vector)
     end
   end
 
+  public
   def score vector
     basis_from_eigenvectors 1, scatter(vector)
   end
@@ -44,10 +50,11 @@ class CCIPCA
     @_archived_bases ||= begin
                            puts "Calculating bases for archived vectors"
                            bases = {}
-                           puts '=' * @vector_archive.count
-                           @vector_archive.each do |archived|
+                           puts '=' * @image_archive.count
+                           @image_archive.each do |archived|
                              print '.'
-                             new_basis = Vector.new(basis_from_eigenvectors(0, scatter(archived)))
+                             vector = archived.to_vector
+                             new_basis = Vector.new(basis_from_eigenvectors(0, scatter(vector)))
                              bases[new_basis] = archived
                            end
                            puts
@@ -56,7 +63,7 @@ class CCIPCA
   end
 
   def write path
-    @vector_archive.uniq!
+    @image_archive.uniq!
     File.open path, 'w' do |file|
       file << YAML::dump(self)
     end

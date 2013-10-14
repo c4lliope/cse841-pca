@@ -21,13 +21,18 @@ class DataSource
   end
 
   def image_data_vectors
-    test_images.map do |filename|
+    @_image_data_vectors ||= images.map do |image|
+      image.to_vector
+    end
+  end
+
+  def images
+    @_images ||= test_images.map do |filename|
       unless /\./ =~ filename
         filename += '.raw'
       end
       path = File.absolute_path(File.join(File.split(config.image_index).first, filename))
-      image = Image.from_raw(path, 64, 88)
-      Vector.new(image.data)
+      Image.from_raw(path, 64, 88, filename)
     end
   end
 
@@ -37,6 +42,10 @@ class DataSource
 
   def database_path
     config.network_file
+  end
+
+  def output_file
+    config.output_file
   end
 
   private
