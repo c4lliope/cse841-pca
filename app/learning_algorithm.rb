@@ -5,7 +5,7 @@ require_relative 'ccipca'
 class LearningAlgorithm < Algorithm
   def initialize(source)
     @source = source
-    @pca = CCIPCA.new
+    @pca = CCIPCA.new source.mef_count
   end
 
   def run
@@ -31,11 +31,11 @@ class LearningAlgorithm < Algorithm
 
   def output_eigenvectors
     eigenvectors = pca.eigenvectors
-    puts "Calculated #{eigenvectors.count} eigenvectors"
+    puts "Calculated #{eigenvectors.count - 1} principal components"
     puts "Outputting to 'mef' directory"
 
     eigenvectors.each_with_index do |data, index|
-      output data, "eigen_#{index}"
+      output data, "#{index}"
     end
   end
 
@@ -56,6 +56,33 @@ class LearningAlgorithm < Algorithm
   end
 
   def report
-    "TODO The report string"
+    [header, mean_filename, mef_filenames].join seperator
+  end
+
+  def header
+    "Output for pcanet.rb by Grayson Wright
+    Learning mode
+    Database file: #{source.database_path}
+    Testing List: #{source.input_file}
+    #{source.images.count} images read
+    #{source.mef_count} MEFs calculated"
+  end
+
+  def seperator
+    "\n"*2
+  end
+
+  def mean_filename
+    "Mean filename: mef/0.pmf"
+  end
+
+  def mef_filenames
+    1.upto(source.mef_count).map do |index|
+      "MEF image ##{index}: mef/#{index}.pgm"
+    end.join "\n"
+  end
+
+  def output_file
+    source.output_file
   end
 end

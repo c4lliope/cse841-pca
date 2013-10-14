@@ -46,6 +46,10 @@ class DataSource
     config.image_index
   end
 
+  def mef_count
+    10
+  end
+
   private
   attr_reader :config
 
