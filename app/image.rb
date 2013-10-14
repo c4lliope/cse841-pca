@@ -1,3 +1,7 @@
+# CSE 841 Homework 2: CCI PCA
+# Submission by Grayson Wright
+# ============================
+
 class Image
   def initialize data, width, height, path = nil
     @data = data

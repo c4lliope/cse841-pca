@@ -1,5 +1,8 @@
+# CSE 841 Homework 2: CCI PCA
+# Submission by Grayson Wright
+# ============================
+
 require_relative 'vector'
-require 'yaml'
 
 class CCIPCA
   attr_reader :eigenvectors, :iteration, :mean, :max_eigen_count
@@ -62,13 +65,13 @@ class CCIPCA
   def write path
     @image_archive.uniq!
     File.open path, 'w' do |file|
-      file << YAML::dump(self)
+      file << Marshal::dump(self)
     end
   end
 
   def self.load path
     File.open path do |file|
-      YAML::load file.read
+      Marshal::load file.read
     end
   end
 

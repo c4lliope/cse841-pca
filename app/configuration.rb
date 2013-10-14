@@ -1,3 +1,7 @@
+# CSE 841 Homework 2: CCI PCA
+# Submission by Grayson Wright
+# ============================
+
 require 'optparse'
 require 'ostruct'
 class Configuration < OpenStruct

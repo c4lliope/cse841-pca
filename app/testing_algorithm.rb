@@ -1,3 +1,7 @@
+# CSE 841 Homework 2: CCI PCA
+# Submission by Grayson Wright
+# ============================
+
 require_relative 'algorithm'
 require_relative 'ccipca'
 
@@ -9,10 +13,11 @@ class TestingAlgorithm
   end
 
   def run
-    puts "Testing images..."
+    puts "#{images.count} images to test"
     images.each_with_index do |image, index|
       @matches[image] = pca.closest_neighbor image.to_vector
     end
+    puts
     output_report
   end
 
@@ -41,9 +46,9 @@ class TestingAlgorithm
 
   def header
     "Output for pcanet.rb by Grayson Wright
-    Testing mode
-    Database file: #{source.database_path}
-    Testing List: #{source.input_file}"
+Testing mode
+Database file: #{source.database_path}
+Testing List: #{source.input_file}"
   end
 
   def seperator

@@ -1,3 +1,7 @@
+# CSE 841 Homework 2: CCI PCA
+# Submission by Grayson Wright
+# ============================
+
 require_relative 'configuration'
 require_relative 'learning_algorithm'
 require_relative 'testing_algorithm'

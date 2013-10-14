@@ -1,3 +1,7 @@
+# CSE 841 Homework 2: CCI PCA
+# Submission by Grayson Wright
+# ============================
+
 require_relative 'algorithm'
 require_relative 'vector'
 require_relative 'ccipca'
@@ -59,11 +63,12 @@ class LearningAlgorithm < Algorithm
 
   def header
     "Output for pcanet.rb by Grayson Wright
-    Learning mode
-    Database file: #{source.database_path}
-    Testing List: #{source.input_file}
-    #{source.images.count} images read
-    #{source.mef_count} MEFs calculated"
+Learning mode
+#{source.epochs} epochs
+Database file: #{source.database_path}
+Testing List: #{source.input_file}
+#{source.images.count} images read
+#{source.mef_count} MEFs calculated"
   end
 
   def seperator
