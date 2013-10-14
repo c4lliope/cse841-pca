@@ -9,26 +9,15 @@ class TestingAlgorithm
   end
 
   def run
-    puts "#{images.count} images to test"
+    puts "Testing images..."
     images.each_with_index do |image, index|
       @matches[image] = pca.closest_neighbor image.to_vector
-      write index, image, @matches[image]
     end
-    puts
     output_report
   end
 
   private
   attr_reader :pca, :source
-
-  def write index, image, match
-    File.open("matches/#{index}_image.pgm", 'w') do |file|
-      file << image.to_pgm
-    end
-    File.open("matches/#{index}_match.pgm", 'w') do |file|
-      file << match.to_pgm
-    end
-  end
 
   def images
     @_images ||= source.images.freeze
